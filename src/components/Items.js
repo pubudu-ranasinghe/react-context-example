@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
-import TodoContext from "../contexts/TodoContext";
+import React, { useState } from "react";
+import { useTodoContext } from "../contexts/TodoContext";
 
 export function NewItem() {
   const [text, setText] = useState("");
-  const todoContext = useContext(TodoContext);
+  const todoContext = useTodoContext();
 
   return (
     <div className="Item">
@@ -19,7 +19,7 @@ export function NewItem() {
 }
 
 export function ItemList() {
-  const todoContext = useContext(TodoContext);
+  const todoContext = useTodoContext();
 
   return todoContext.items.map((item, i) => (
     <Item text={item} index={i} key={i} remove={todoContext.remove} />
