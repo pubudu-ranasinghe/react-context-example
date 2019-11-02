@@ -1,37 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TodoContext from "../contexts/TodoContext";
 
-export function NewItem({ add }) {
+export function NewItem() {
   const [text, setText] = useState("");
+  const todoContext = useContext(TodoContext);
 
   return (
-    <TodoContext.Consumer>
-      {values => (
-        <div className="Item">
-          <input
-            type="text"
-            placeholder="New Task"
-            value={text}
-            onChange={e => setText(e.target.value)}
-          ></input>
-          <button onClick={() => values.add(text)}>Add</button>
-        </div>
-      )}
-    </TodoContext.Consumer>
+    <div className="Item">
+      <input
+        type="text"
+        placeholder="New Task"
+        value={text}
+        onChange={e => setText(e.target.value)}
+      ></input>
+      <button onClick={() => todoContext.add(text)}>Add</button>
+    </div>
   );
 }
 
 export function ItemList() {
-  // Here we consume the values from TodoContext using the TodoContext Consumer
-  return (
-    <TodoContext.Consumer>
-      {values =>
-        values.items.map((item, i) => (
-          <Item text={item} index={i} key={i} remove={values.remove} />
-        ))
-      }
-    </TodoContext.Consumer>
-  );
+  const todoContext = useContext(TodoContext);
+
+  return todoContext.items.map((item, i) => (
+    <Item text={item} index={i} key={i} remove={todoContext.remove} />
+  ));
 }
 
 export function Item({ text, index, remove }) {
