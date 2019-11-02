@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 export function NewItem({ add }) {
+  const [text, setText] = useState("");
+
   return (
     <div className="Item">
-      <input type="text" placeholder="New Task"></input>
-      <button onClick={() => add("New")}>Add</button>
+      <input
+        type="text"
+        placeholder="New Task"
+        value={text}
+        onChange={e => setText(e.target.value)}
+      ></input>
+      <button onClick={() => add(text)}>Add</button>
     </div>
   );
 }
