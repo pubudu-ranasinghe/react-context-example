@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { useTodoContext } from "../contexts/TodoContext";
+import {
+  useTodoContext,
+  addTodo,
+  removeTodo,
+  clearAll
+} from "../contexts/TodoContext";
 
 export function NewItem() {
   const [text, setText] = useState("");
-  const todoContext = useTodoContext();
+  const { dispatch } = useTodoContext();
 
   return (
     <div className="Item">
@@ -13,24 +18,36 @@ export function NewItem() {
         value={text}
         onChange={e => setText(e.target.value)}
       ></input>
-      <button onClick={() => todoContext.add(text)}>Add</button>
+      <button onClick={() => dispatch(addTodo(text))}>Add</button>
     </div>
   );
 }
 
 export function ItemList() {
-  const todoContext = useTodoContext();
+  const { items, dispatch } = useTodoContext();
 
-  return todoContext.items.map((item, i) => (
-    <Item text={item} index={i} key={i} remove={todoContext.remove} />
-  ));
+  return (
+    <>
+      {items.map((item, i) => (
+        <Item text={item} index={i} key={i} dispatch={dispatch} />
+      ))}
+      {items.length > 0 && (
+        <p
+          style={{ fontSize: "15px", cursor: "pointer" }}
+          onClick={() => dispatch(clearAll())}
+        >
+          Clear All
+        </p>
+      )}
+    </>
+  );
 }
 
-export function Item({ text, index, remove }) {
+export function Item({ text, index, dispatch }) {
   return (
     <div className="Item">
       {index + 1} {text}
-      <span onClick={() => remove(index)}>Done</span>
+      <span onClick={() => dispatch(removeTodo(index))}>Done</span>
     </div>
   );
 }
