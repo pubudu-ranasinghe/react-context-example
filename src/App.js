@@ -1,6 +1,7 @@
 import React from "react";
 import Todos from "./components/Todos";
 import Login from "./components/Login";
+import PrivateRoute from "./components/PrivateRoute";
 import { TodoProvider } from "./contexts/TodoContext";
 import { AuthProvider, useAuthContext, logout } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -13,11 +14,11 @@ function App() {
         <div className="App">
           <Greeting />
           <Switch>
-            <Route path="/todos">
+            <PrivateRoute path="/todos">
               <TodoProvider>
                 <Todos />
               </TodoProvider>
-            </Route>
+            </PrivateRoute>
             <Route path="/">
               <Login />
             </Route>
