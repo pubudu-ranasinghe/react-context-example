@@ -1,20 +1,32 @@
 import React from "react";
-import { ItemList, NewItem } from "./components/Items";
+import Todos from "./components/Todos";
+import Login from "./components/Login";
 import { TodoProvider } from "./contexts/TodoContext";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 function App() {
   return (
-    <TodoProvider>
+    <Router>
       <div className="App">
-        <header className="App-header">
-          <h2>🚀 ToDo App</h2>
-          <NewItem />
-          <ItemList />
-        </header>
+        <Greeting />
+        <Switch>
+          <Route path="/todos">
+            <TodoProvider>
+              <Todos />
+            </TodoProvider>
+          </Route>
+          <Route path="/">
+            <Login />
+          </Route>
+        </Switch>
       </div>
-    </TodoProvider>
+    </Router>
   );
+}
+
+function Greeting() {
+  return <p>You are not logged in</p>;
 }
 
 export default App;
