@@ -18,11 +18,12 @@ export default function Login() {
     setLoading(true);
     try {
       await apiLogin(name);
+      setLoading(false);
       dispatch(loginSuccess(name));
     } catch (error) {
+      setLoading(false);
       dispatch(loginFail(error.message));
     }
-    setLoading(false);
   }
 
   // If user is already logged in redirect to Todos page
